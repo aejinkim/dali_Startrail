@@ -16,6 +16,13 @@ export default function FocusScreen({ onExit }: { onExit: () => void }) {
   const endRef = useRef(Date.now() + totalMs)
   const doneRef = useRef(false)
 
+  const activeRef = useRef(active)
+  useEffect(() => {
+    activeRef.current = active
+  }, [active])
+
+  // StrictMode runs this effect twice in dev; doneRef + clearInterval on cleanup prevent double-credit.
+  // Background-tab throttling is fine: remaining time derives from Date.now(), not tick count.
   useEffect(() => {
     endRef.current = Date.now() + totalMs
     const id = setInterval(() => {
@@ -23,7 +30,8 @@ export default function FocusScreen({ onExit }: { onExit: () => void }) {
       if (left <= 0 && !doneRef.current) {
         doneRef.current = true
         clearInterval(id)
-        if (active) finishSession(active.id, DEFAULT_MIN)
+        const a = activeRef.current
+        if (a) finishSession(a.id, DEFAULT_MIN)
         setRemainingMs(0)
         onExit()
         return
