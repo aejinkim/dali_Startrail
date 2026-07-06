@@ -24,5 +24,10 @@ body {
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
+button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
 .mono { font-family: var(--mono); }
 .serif-italic { font-family: var(--serif); font-style: italic; }
