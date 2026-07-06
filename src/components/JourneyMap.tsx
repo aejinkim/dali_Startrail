@@ -36,11 +36,17 @@ export default function JourneyMap({
     if (injectedSampler) return
     const path = pathRef.current
     if (!path || typeof path.getTotalLength !== 'function') return
-    const len = path.getTotalLength()
-    setSampler(() => (f: number) => {
-      const pt = path.getPointAtLength(Math.max(0, Math.min(1, f)) * len)
-      return { x: pt.x, y: pt.y }
-    })
+    // The real-SVG sampler below is exercised by manual browser verification
+    // (Task 14); jsdom does not implement getTotalLength/getPointAtLength.
+    try {
+      const len = path.getTotalLength()
+      setSampler(() => (f: number) => {
+        const pt = path.getPointAtLength(Math.max(0, Math.min(1, f)) * len)
+        return { x: pt.x, y: pt.y }
+      })
+    } catch {
+      // Some engines throw on detached/degenerate paths; leave sampler null.
+    }
   }, [injectedSampler])
 
   const camps = campFractions(projects, tasks)

@@ -30,4 +30,18 @@ describe('JourneyMap', () => {
     const ch = container.querySelector('[data-character]') as SVGGElement
     expect(ch.getAttribute('transform')).toContain('25')
   })
+
+  it('renders the last camp as the summit with a larger radius', () => {
+    const twoTasks: Task[] = [
+      { id: 't1', projectId: 'p1', title: 'A', estimatedSessions: 2, completedSessions: 2, order: 0, done: true },
+      { id: 't2', projectId: 'p1', title: 'B', estimatedSessions: 2, completedSessions: 0, order: 1, done: false },
+    ]
+    const { container } = render(
+      <JourneyMap projects={projects} tasks={twoTasks} sampler={sampler} />,
+    )
+    const camps = container.querySelectorAll('[data-camp]')
+    expect(camps).toHaveLength(2)
+    expect(camps[0].getAttribute('r')).toBe('4')
+    expect(camps[1].getAttribute('r')).toBe('6')
+  })
 })
