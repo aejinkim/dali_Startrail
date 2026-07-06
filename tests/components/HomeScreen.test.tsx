@@ -31,4 +31,11 @@ describe('HomeScreen', () => {
     fireEvent.click(screen.getByLabelText('세션 시작'))
     expect(onStart).toHaveBeenCalledOnce()
   })
+
+  it('invites adding a task and disables the play button when there are no tasks', () => {
+    useStore.getState().setNorthStar('Launch', '')
+    render(<HomeScreen onStart={() => {}} />)
+    expect(screen.getByText('태스크를 추가해 여정을 시작하세요')).toBeInTheDocument()
+    expect(screen.getByLabelText('세션 시작')).toBeDisabled()
+  })
 })

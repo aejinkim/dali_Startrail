@@ -58,7 +58,7 @@ export default function HomeScreen({ onStart }: { onStart: () => void }) {
               {active ? active.title : '태스크를 추가해 여정을 시작하세요'}
             </div>
             {active && (
-              <div className="mono" style={{ fontSize: 9, color: '#A8A296', marginTop: 2 }}>
+              <div className="mono" style={{ fontSize: 9, color: 'var(--dark-muted)', marginTop: 2 }}>
                 SESSION {active.completedSessions}/{active.estimatedSessions}
               </div>
             )}
