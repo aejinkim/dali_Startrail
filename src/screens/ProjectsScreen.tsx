@@ -20,6 +20,15 @@ export default function ProjectsScreen() {
   const setDraftFor = (pid: string, next: Partial<{ title: string; sessions: string }>) =>
     setDraft((d) => ({ ...d, [pid]: { ...draftFor(pid), ...next } }))
 
+  const handleDeleteProject = (pid: string) => {
+    deleteProject(pid)
+    setDraft((d) => {
+      const next = { ...d }
+      delete next[pid]
+      return next
+    })
+  }
+
   return (
     <div style={{ padding: '1rem 1.25rem', overflowY: 'auto' }}>
       <h2 style={{ fontSize: 18, fontWeight: 500 }}>프로젝트</h2>
@@ -51,13 +60,14 @@ export default function ProjectsScreen() {
           <div key={p.id} style={card}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <strong style={{ fontSize: 14 }}>{p.title}</strong>
-              <button type="button" onClick={() => deleteProject(p.id)} style={{ color: 'var(--muted)', fontSize: 12 }}>삭제</button>
+              <button type="button" aria-label={`${p.title} 프로젝트 삭제`} onClick={() => handleDeleteProject(p.id)} style={{ color: 'var(--muted)', fontSize: 12 }}>삭제</button>
             </div>
 
             {pTasks.map((t) => (
               <div key={t.id} style={taskRow}>
                 <button
                   type="button"
+                  aria-label={`${t.title} 활성 태스크로 선택`}
                   onClick={() => setActiveTask(t.id)}
                   style={{ fontSize: 13, color: t.id === activeTaskId ? 'var(--orange)' : 'var(--ink)' }}
                 >
@@ -65,7 +75,7 @@ export default function ProjectsScreen() {
                 </button>
                 <span className="mono" style={{ fontSize: 11, color: 'var(--muted)' }}>
                   {t.completedSessions}/{t.estimatedSessions} · {Math.round(taskProgress(t) * 100)}%
-                  <button type="button" onClick={() => deleteTask(t.id)} style={{ marginLeft: 8, color: 'var(--muted)' }}>×</button>
+                  <button type="button" aria-label={`${t.title} 삭제`} onClick={() => deleteTask(t.id)} style={{ marginLeft: 8, color: 'var(--muted)' }}>×</button>
                 </span>
               </div>
             ))}
