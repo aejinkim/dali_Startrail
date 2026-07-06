@@ -28,6 +28,37 @@ describe('taskSegments', () => {
   it('returns [] when there are no tasks', () => {
     expect(taskSegments(projects, [])).toEqual([])
   })
+
+  it('treats a task whose project is unknown as project order 0 and still tiles to 1', () => {
+    const withGhost: Task[] = [
+      ...tasks(),
+      { id: 'tg', projectId: 'ghost', title: 'g', estimatedSessions: 2, completedSessions: 0, order: 9, done: false },
+    ]
+    const segs = taskSegments(projects, withGhost)
+    // ghost project falls back to order 0 (?? 0), so it groups with p1;
+    // within order 0 it sorts by task order: t1 (0), t2 (1), tg (9), then p2's t3
+    expect(segs.map((s) => s.taskId)).toEqual(['t1', 't2', 'tg', 't3'])
+    // segments remain contiguous and end at exactly 1
+    expect(segs[0].start).toBe(0)
+    for (let i = 1; i < segs.length; i++) {
+      expect(segs[i].start).toBe(segs[i - 1].end)
+    }
+    expect(segs[segs.length - 1].end).toBe(1)
+  })
+
+  it('gives a zero-estimate task a zero-width segment and lets the rest span to 1', () => {
+    const mixed: Task[] = [
+      { id: 'z0', projectId: 'p1', title: 'zero', estimatedSessions: 0, completedSessions: 0, order: 0, done: false },
+      { id: 'z1', projectId: 'p1', title: 'two', estimatedSessions: 2, completedSessions: 0, order: 1, done: false },
+    ]
+    const segs = taskSegments(projects, mixed)
+    expect(segs.map((s) => s.taskId)).toEqual(['z0', 'z1'])
+    // zero-estimate task collapses to a point
+    expect(segs[0].start).toBe(segs[0].end)
+    expect(segs[0]).toMatchObject({ start: 0, end: 0 })
+    // the valid task occupies the full remaining span
+    expect(segs[1]).toMatchObject({ start: 0, end: 1 })
+  })
 })
 
 describe('campFractions', () => {
