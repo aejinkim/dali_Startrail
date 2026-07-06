@@ -2,7 +2,18 @@ import { useStore } from '../store/useStore'
 import { northStarProgress } from '../domain/progress'
 import JourneyMap from '../components/JourneyMap'
 
-export default function HomeScreen({ onStart }: { onStart: () => void }) {
+interface Point { x: number; y: number }
+type Sampler = (fraction: number) => Point
+
+export default function HomeScreen({
+  onStart,
+  justFinished = false,
+  sampler,
+}: {
+  onStart: () => void
+  justFinished?: boolean
+  sampler?: Sampler
+}) {
   const northStar = useStore((s) => s.northStar)
   const projects = useStore((s) => s.projects)
   const tasks = useStore((s) => s.tasks)
@@ -37,7 +48,7 @@ export default function HomeScreen({ onStart }: { onStart: () => void }) {
           minHeight: 320,
         }}
       >
-        <JourneyMap projects={projects} tasks={tasks} />
+        <JourneyMap projects={projects} tasks={tasks} walking={justFinished} sampler={sampler} />
 
         <div
           style={{

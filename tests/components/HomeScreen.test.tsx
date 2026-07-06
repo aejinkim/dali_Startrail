@@ -39,3 +39,16 @@ describe('HomeScreen', () => {
     expect(screen.getByLabelText('세션 시작')).toBeDisabled()
   })
 })
+
+describe('HomeScreen walking state', () => {
+  it('passes walking=true to the map when justFinished is set', () => {
+    const s = useStore.getState()
+    s.setNorthStar('Launch', '')
+    const pid = s.addProject('Branding')
+    useStore.getState().addTask(pid, 'Logo', 4)
+    const { container } = render(<HomeScreen onStart={() => {}} justFinished sampler={(f) => ({ x: f * 100, y: f * 100 })} />)
+    // walking mouth path uses the 3.5 control point
+    const body = container.querySelector('[data-character-body] path') as SVGPathElement
+    expect(body.getAttribute('d')).toContain('3.5')
+  })
+})

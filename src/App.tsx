@@ -11,6 +11,7 @@ export default function App() {
   const northStar = useStore((s) => s.northStar)
   const [tab, setTab] = useState<Tab>('journey')
   const [focus, setFocus] = useState(false)
+  const [justFinished, setJustFinished] = useState(false)
 
   if (!northStar) {
     return (
@@ -23,7 +24,14 @@ export default function App() {
   if (focus) {
     return (
       <div className="app dark">
-        <FocusScreen onExit={() => setFocus(false)} />
+        <FocusScreen
+          onExit={() => {
+            setFocus(false)
+            setJustFinished(true)
+            setTab('journey')
+            setTimeout(() => setJustFinished(false), 2200)
+          }}
+        />
       </div>
     )
   }
@@ -31,7 +39,7 @@ export default function App() {
   return (
     <div className="app">
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {tab === 'journey' && <HomeScreen onStart={() => setFocus(true)} />}
+        {tab === 'journey' && <HomeScreen onStart={() => setFocus(true)} justFinished={justFinished} />}
         {tab === 'projects' && <ProjectsScreen />}
         {tab === 'records' && <RecordsScreen />}
       </div>
