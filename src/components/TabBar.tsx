@@ -20,6 +20,8 @@ export default function TabBar({
         return (
           <button
             key={t.id}
+            type="button"
+            aria-current={on ? 'page' : undefined}
             onClick={() => onChange(t.id)}
             style={{
               flex: 1,
