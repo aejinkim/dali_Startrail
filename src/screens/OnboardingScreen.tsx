@@ -20,12 +20,14 @@ export default function OnboardingScreen() {
       </div>
 
       <input
+        aria-label="북극성 제목"
         placeholder="예: 브랜드 첫 런칭"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         style={darkInput}
       />
       <input
+        aria-label="북극성 다짐"
         placeholder="이 시간은 나의 북극성을 향해 가고 있는가?"
         value={statement}
         onChange={(e) => setStatement(e.target.value)}
