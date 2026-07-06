@@ -27,6 +27,17 @@ describe('useStore CRUD', () => {
     expect(state.activeTaskId).toBe(tid)
   })
 
+  it('clears activeTaskId when its project is deleted', () => {
+    const s = useStore.getState()
+    s.setNorthStar('Launch', '')
+    const pid = useStore.getState().addProject('Branding')
+    useStore.getState().addTask(pid, 'Logo drafts', 4)
+    useStore.getState().deleteProject(pid)
+    const state = useStore.getState()
+    expect(state.activeTaskId).toBeNull()
+    expect(state.tasks).toHaveLength(0)
+  })
+
   it('finishing a session advances the active task', () => {
     const s = useStore.getState()
     s.setNorthStar('Launch', '')

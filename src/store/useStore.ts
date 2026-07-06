@@ -70,6 +70,10 @@ export const useStore = create<AppState & Actions>()(
         set((s) => ({
           projects: s.projects.filter((p) => p.id !== projectId),
           tasks: s.tasks.filter((t) => t.projectId !== projectId),
+          activeTaskId:
+            s.tasks.find((t) => t.id === s.activeTaskId)?.projectId === projectId
+              ? null
+              : s.activeTaskId,
         })),
 
       reset: () => set({ ...EMPTY_STATE }),
