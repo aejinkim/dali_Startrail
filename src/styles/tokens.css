@@ -1,0 +1,25 @@
+:root {
+  --cream: #E8E4DB;
+  --paper: #F4F1EA;
+  --ink: #2B2925;
+  --orange: #E8562A;
+  --amber: #E8983A;
+  --border: #D8D3C7;
+  --contour: #DDD8CC;
+  --muted: #8A857A;
+
+  --charcoal: #1B1A17;
+  --tan: #A89C82;
+  --ivory: #EDE6D6;
+  --needle: #D94F35;
+  --track: #33312B;
+  --dark-muted: #8A8272;
+  --serif-label: #C7BBA3;
+
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius: 12px;
+  --maxw: 430px;
+}
