@@ -6,14 +6,15 @@
 
 - 워크트리: `~/Projects/dali_timetimer/.worktrees/startrail-mvp` (브랜치 `feat/startrail-mvp`)
 - **메인 체크아웃(`~/Projects/dali_timetimer` 루트)은 건드리지 않았음** — 원본 앱은 그대로 있고, 새 코드는 전부 이 워크트리 안에 있음
-- Task 0~13까지 구현 완료, 43개 테스트 전체 통과 (`npm test`), 빌드/린트 그린
-- 아직 안 한 것: **Task 13의 코드 리뷰(스펙+품질 검증)가 진행 중이었으나 세션 한도로 중단됨** — 재검증 필요. **Task 14(수동 검증 + README + 첫 push)는 아직 시작 안 함**
+- Task 0~13까지 구현 + 2단계 리뷰(스펙/품질) 전부 완료, 43개 테스트 전체 통과 (`npm test`), 빌드/린트 그린
+- Task 13 리뷰 결과: 승인. Minor 2건은 의도적으로 미룸 — (a) `Point`/`Sampler` 타입이 JourneyMap.tsx와 HomeScreen.tsx에 중복 정의됨(공유 모듈로 추출 가능), (b) App.tsx의 2200ms setTimeout에 cleanup 없음(연속 세션 시 걷기 연출이 일찍 끊길 수 있는 코스메틱 이슈만 존재)
+- 아직 안 한 것: **Task 14(수동 검증 + README + 첫 push)만 남음**
 - 스펙 문서: `docs/superpowers/specs/2026-07-06-north-star-trail-redesign-design.md`
 - 구현 계획: `docs/superpowers/plans/2026-07-06-startrail-mvp.md` (Task 0~14, 각 태스크에 TDD 스텝과 정확한 코드가 다 적혀 있음)
 
 ## 바로 할 일 (우선순위 순)
 
-1. Task 13 리뷰 마무리: `git show 5924a6e --stat`으로 diff 확인 → 스펙 준수 여부(App.tsx의 justFinished 플래그, HomeScreen의 justFinished/sampler prop, HomeScreen.test.tsx의 새 테스트) → 품질 확인(2200ms setTimeout에 cleanup이 없는데 안전한지 등)
+1. Task 14 진행이 첫 순서 (아래 항목 2번부터 보면 됨)
 2. Task 14 진행: `docs/superpowers/plans/2026-07-06-startrail-mvp.md`의 "Task 14" 섹션 그대로 — `npm run dev`로 수동 검증(온보딩→프로젝트/태스크 추가→집중 세션→완료 후 지도 갱신→새로고침 시 영속) → README 교체 → 커밋 → **이때 처음으로 `git push`**
 3. 전체 다 끝나면 `superpowers:finishing-a-development-branch` 스킬로 머지/PR 여부 결정
 
