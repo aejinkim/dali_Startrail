@@ -1,0 +1,33 @@
+@import './tokens.css';
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.app.dark { background: var(--charcoal); color: var(--ivory); }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+button:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.mono { font-family: var(--mono); }
+.serif-italic { font-family: var(--serif); font-style: italic; }

@@ -944,8 +944,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 ```bash
 cd ~/Projects/dali_timetimer
-rm -f src/App.css src/index.css src/assets/react.svg
+rm -f src/App.css src/index.css src/assets/react.svg src/assets/hero.png src/assets/vite.svg public/icons.svg
 ```
+
+Vite 8 template ships extra boilerplate (hero.png, vite.svg, icons.svg, .oxlintrc.json, oxlint `lint` script) not present in older templates; .oxlintrc.json and the lint script are kept intentionally. Replace public/favicon.svg content with the north-star icon from legacy/assets/north-star.svg so index.html's icon link stays valid.
 
 Expected: files removed (they were Vite boilerplate; App.tsx is rewritten in Task 7).
 
