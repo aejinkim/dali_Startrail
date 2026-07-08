@@ -1,47 +1,33 @@
-# Dali Timetimer
+# Startrail
 
-A product that helps you set your own goals and use Pomodoro sessions to make each day meaningful.
+A north-star pomodoro. Every focus session is a step along a contour journey
+map toward one big goal. Light map view for planning, dark dial for focus.
 
-## Run
+## Develop
 
 ```bash
-cd /Users/aejinkim/Projects/dali_timetimer
-python3 -m http.server 4173
+npm install
+npm run dev
 ```
 
-Open in your browser:
+## Test
 
-```text
-http://127.0.0.1:4173/
+```bash
+npm test
+```
+
+## Build
+
+```bash
+npm run build && npm run preview
 ```
 
 ## Structure
 
-- `index.html`: App markup and screen structure
-- `styles.css`: Responsive UI and visual design
-- `app.js`: Timer, sessions, analytics, and local persistence
-- `assets/north-star.svg`: App icon
+- `src/domain/` — pure logic (types, progress, sessions, journey layout), unit-tested
+- `src/store/useStore.ts` — Zustand store + localStorage persistence
+- `src/screens/` — Onboarding, Home (journey), Focus, Projects, Records
+- `src/components/` — JourneyMap, Character, DialTimer, TabBar
+- `legacy/` — the previous vanilla-JS app, kept for reference only
 
-## Codex Setup
-
-Use this default setup for this project:
-
-- UI implementation: `frontend-design`
-- Browser verification: `browser:control-in-app-browser`
-- Design polish: `high-end-visual-design`, `emil-design-eng`
-- Project memory: `remember`, `recall`
-
-See `AGENTS.md` for project working rules.
-
-## Supabase Auth
-
-The app supports real email magic-link login through Supabase Auth.
-
-1. Create a Supabase project.
-2. Copy the Project URL and public anon key.
-3. Open the app, click `LOGIN`, paste both values, and click `SAVE_CONFIG`.
-4. Enter an email and click `SEND_MAGIC_LINK`.
-
-For Auth testing, run the local preview server and add `http://127.0.0.1:4173/` to Supabase Auth redirect URLs. Magic-link redirects are not reliable from a raw `file://` URL.
-
-Signed-in users get a separate browser-local data store keyed by their Supabase user id. Database sync can be added next.
+See `docs/superpowers/specs/2026-07-06-north-star-trail-redesign-design.md` for the design concept.
